@@ -9,29 +9,13 @@ public class Loader {
         barsic.pee();
         System.out.println(murca.getCount());
         while (!murca.getStatus().equals("Dead")) {
-            if (!murca.getStatus().equals("Dead"))
-                murca.meow();
-            if (murca.getStatus().equals("Dead")) {
-                System.out.println("Померла Мурка...");
-                System.out.println("Мяукнула мурка: " + counter + " раз");
-            }
+            murca.pee();
+
             counter++;
         }
-        // пытался понять почему барсик взрывается сразу, потом понял, что мне не выводится, что он выпил. Решил создать счетчик выпитого
-        counter = 0;
+        murca.feed(100.0); // проверяем, что мертвый кот не кормится
+        System.out.println(murca.getStatus());
         System.out.println(murca.getCount());
-        while (!(barsic.getStatus().equals("Exploded"))) {
-            barsic.drink(1.0);
-            barsic.feed(2.0);
-            if (barsic.getStatus().equals("Exploded")) {
-                System.out.println("Взорвался барсик...");
-                // добавил, что бы выдало, что пора закапывать
-                barsic.drink(1.0);
-                System.out.println("Барсик выпил: " + counter + " литров...");
-                System.out.println("И съел: " + barsic.getFeedCounter());
-            }
-            counter++;
-        }
-        System.out.println(murca.getCount());
+
     }
 }

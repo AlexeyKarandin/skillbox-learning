@@ -3,18 +3,24 @@ public class Cat {
     private final double originWeight;
     private double weight;
 
-    private final double minWeight;
-    private final double maxWeight;
+    private final double MIN_WEIGHT;
+    private final double MAX_WEIGHT;
     private double feedCounter = .0;
+    private boolean isAlive;
     private static int count;
+    private static final int EYE = 2; // Предпологаю глаза нужны будут позже, при создании конструкторов
 
     public Cat() {
         weight = 1500.0 + 3000.0 * Math.random();
         originWeight = weight;
-        minWeight = 1000.0;
-        maxWeight = 9000.0;
+        MIN_WEIGHT = 1000.0;
+        MAX_WEIGHT = 9000.0;
         count++;
+        isAlive = true;
+    }
 
+    public boolean isWeightNormal() {
+        return (weight > MIN_WEIGHT && weight < MAX_WEIGHT);
     }
 
     // метод возвращаемый кол-во живых кошек, т.к. переменная count приватная,
@@ -22,6 +28,7 @@ public class Cat {
     public int getCount() {
         return count;
     }
+
     // подсчет съеденного для текущего экземпляра
     public double getFeedCounter() {
         return feedCounter;
@@ -29,35 +36,45 @@ public class Cat {
 
     // Метод для похода в туалет
     public void pee() {
-        if (weight > minWeight) {
+        if (isWeightNormal()) {
             --weight;
             System.out.println("Ппссссс....");
+            if (!isWeightNormal()) {
+                getStatus();
+            }
         } else
             System.out.println("Кошку пора закопать...");
     }
 
     public void meow() {
-        if (weight > minWeight) {
+        if (isWeightNormal()) {
             --weight;
-            System.out.println("Meow");
+            System.out.println("Ппссссс....");
+            if (!isWeightNormal()) {
+                getStatus();
+            }
         } else
             System.out.println("Кошку пора закопать...");
     }
 
     public void feed(Double amount) {
-        if (weight < maxWeight) {
+        if (isWeightNormal()) {
             weight += amount;
-            // производим подсчет съеденной еды
-            feedCounter += amount;
+            System.out.println("Ппссссс....");
+            if (!isWeightNormal()) {
+                getStatus();
+            }
         } else
             System.out.println("Кошку пора закопать...");
     }
 
     public void drink(Double amount) {
-        if (weight < maxWeight) {
+        if (isWeightNormal()) {
             weight += amount;
-            // производим подсчет съеденной еды
-            feedCounter += amount;
+            System.out.println("Ппссссс....");
+            if (!isWeightNormal()) {
+                getStatus();
+            }
         } else
             System.out.println("Кошку пора закопать...");
     }
@@ -67,11 +84,19 @@ public class Cat {
     }
 
     public String getStatus() {
-        if (weight < minWeight) {
-            count--;
+        if (weight < MIN_WEIGHT) {
+            if (isAlive) {
+                count--;
+                isAlive = false;
+                System.out.println("Померла от обезвоживания");
+            }
             return "Dead";
-        } else if (weight > maxWeight) {
-            count--;
+        } else if (weight > MAX_WEIGHT) {
+            if (isAlive) {
+                count--;
+                isAlive = false;
+                System.out.println("Померла от еды");
+            }
             return "Exploded";
         } else if (weight > originWeight) {
             return "Sleeping";
