@@ -10,10 +10,8 @@ public class Loader {
         System.out.println(murca.getCount());
         while (!murca.getStatus().equals("Dead")) {
             murca.pee();
-
-            counter++;
         }
-        murca.feed(100.0); // проверяем, что мертвый кот не кормится
+        //murca.feed(100.0); // проверяем, что мертвый кот не кормится
         System.out.println(murca.getStatus());
         System.out.println(murca.getCount());
 

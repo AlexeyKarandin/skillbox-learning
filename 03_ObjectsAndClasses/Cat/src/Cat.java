@@ -8,6 +8,7 @@ public class Cat {
     private double feedCounter = .0;
     private boolean isAlive;
     private static int count;
+    private ColorsCat color;
     private static final int EYE = 2; // Предпологаю глаза нужны будут позже, при создании конструкторов
 
     public Cat() {
@@ -17,6 +18,7 @@ public class Cat {
         MAX_WEIGHT = 9000.0;
         count++;
         isAlive = true;
+        color = ColorsCat.GREEN;
     }
 
     public boolean isWeightNormal() {
@@ -40,7 +42,11 @@ public class Cat {
             --weight;
             System.out.println("Ппссссс....");
             if (!isWeightNormal()) {
-                getStatus();
+                if (isAlive) {
+                    count--;
+                    isAlive = false;
+                    System.out.println("Померла от обезвоживания\nМинус кот");
+                }
             }
         } else
             System.out.println("Кошку пора закопать...");
@@ -51,7 +57,11 @@ public class Cat {
             --weight;
             System.out.println("Ппссссс....");
             if (!isWeightNormal()) {
-                getStatus();
+                if (isAlive) {
+                    count--;
+                    isAlive = false;
+                    System.out.println("Померла от обезвоживания\nМинус кот");
+                }
             }
         } else
             System.out.println("Кошку пора закопать...");
@@ -62,7 +72,11 @@ public class Cat {
             weight += amount;
             System.out.println("Ппссссс....");
             if (!isWeightNormal()) {
-                getStatus();
+                if (isAlive) {
+                    count--;
+                    isAlive = false;
+                    System.out.println("Померла от еды\nМинус кот");
+                }
             }
         } else
             System.out.println("Кошку пора закопать...");
@@ -73,7 +87,11 @@ public class Cat {
             weight += amount;
             System.out.println("Ппссссс....");
             if (!isWeightNormal()) {
-                getStatus();
+                if (isAlive) {
+                    count--;
+                    isAlive = false;
+                    System.out.println("Померла от воды\nМинус кот");
+                }
             }
         } else
             System.out.println("Кошку пора закопать...");
@@ -85,18 +103,8 @@ public class Cat {
 
     public String getStatus() {
         if (weight < MIN_WEIGHT) {
-            if (isAlive) {
-                count--;
-                isAlive = false;
-                System.out.println("Померла от обезвоживания");
-            }
             return "Dead";
         } else if (weight > MAX_WEIGHT) {
-            if (isAlive) {
-                count--;
-                isAlive = false;
-                System.out.println("Померла от еды");
-            }
             return "Exploded";
         } else if (weight > originWeight) {
             return "Sleeping";
