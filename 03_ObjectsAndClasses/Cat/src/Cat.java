@@ -24,6 +24,14 @@ public class Cat {
         originWeight = weight;
     }
 
+    public ColorsCat getColor() {
+        return color;
+    }
+
+    public void setColor(ColorsCat color) {
+        this.color = color;
+    }
+
     public boolean isWeightNormal() {
         return (weight > MIN_WEIGHT && weight < MAX_WEIGHT);
     }
