@@ -3,8 +3,8 @@ public class Cat {
     private final double originWeight;
     private double weight;
 
-    private final double MIN_WEIGHT;
-    private final double MAX_WEIGHT;
+    private final double MIN_WEIGHT = 1000.0;
+    private final double MAX_WEIGHT = 9000.0;
     private double feedCounter = .0;
     private boolean isAlive;
     private static int count;
@@ -14,11 +14,14 @@ public class Cat {
     public Cat() {
         weight = 1500.0 + 3000.0 * Math.random();
         originWeight = weight;
-        MIN_WEIGHT = 1000.0;
-        MAX_WEIGHT = 9000.0;
         count++;
         isAlive = true;
         color = ColorsCat.GREEN;
+    }
+
+    public Cat(double weight) {
+        this.weight = weight;
+        originWeight = weight;
     }
 
     public boolean isWeightNormal() {

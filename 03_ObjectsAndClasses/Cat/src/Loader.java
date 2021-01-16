@@ -14,6 +14,13 @@ public class Loader {
         //murca.feed(100.0); // проверяем, что мертвый кот не кормится
         System.out.println(murca.getStatus());
         System.out.println(murca.getCount());
+        Cat pipi = getKitten();
+        Cat murmur = getKitten();
+        Cat kitty = getKitten();
+        System.out.println("Вес котенка: " + pipi.getWeight());
 
+    }
+    private static Cat getKitten() {
+        return new Cat(1100.0);
     }
 }
