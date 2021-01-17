@@ -1,15 +1,14 @@
-
 public class Cat {
+    private static final int EYE = 2; // Предпологаю глаза нужны будут позже, при создании конструкторов
+    private static int count;
     private final double originWeight;
-    private double weight;
-
     private final double MIN_WEIGHT = 1000.0;
     private final double MAX_WEIGHT = 9000.0;
-    private double feedCounter = .0;
+    private double weight;
+    private final double feedCounter = .0;
     private boolean isAlive;
-    private static int count;
     private ColorsCat color;
-    private static final int EYE = 2; // Предпологаю глаза нужны будут позже, при создании конструкторов
+    private String name;
 
     public Cat() {
         weight = 1500.0 + 3000.0 * Math.random();
@@ -19,17 +18,39 @@ public class Cat {
         color = ColorsCat.GREEN;
     }
 
+    public Cat(double weight, ColorsCat color, String name) {
+        this.weight = weight;
+        this.color = color;
+        this.name = name;
+        originWeight = weight;
+        count++;
+        isAlive = true;
+    }
+
     public Cat(double weight) {
         this.weight = weight;
         originWeight = weight;
     }
 
+    // вызываем конструктор с параметрами текучего объекта
+    // и возвращаем ссылку на новый объект
+    public Cat copyCat(Cat cat) {
+        return new Cat(this.weight, this.color, this.name);
+    }
     public ColorsCat getColor() {
         return color;
     }
 
     public void setColor(ColorsCat color) {
         this.color = color;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public boolean isWeightNormal() {

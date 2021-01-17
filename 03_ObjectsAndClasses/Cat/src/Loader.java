@@ -4,23 +4,22 @@
 public class Loader {
     public static void main(String[] args) {
         Cat murca = new Cat();
-        Cat barsic = new Cat();
-        int counter = 0;
-        barsic.pee();
-        System.out.println(murca.getCount());
-        while (!murca.getStatus().equals("Dead")) {
-            murca.pee();
-        }
-        //murca.feed(100.0); // проверяем, что мертвый кот не кормится
-        System.out.println(murca.getStatus());
-        System.out.println(murca.getCount());
-        Cat pipi = getKitten();
-        Cat murmur = getKitten();
+        murca.setName("murca");
         Cat kitty = getKitten();
-        System.out.println("Вес котенка: " + pipi.getWeight());
+        System.out.println("Вес котенка: " + kitty.getWeight());
 
+        Cat clonMurca = murca.copyCat(murca);
+        System.out.println("============================================");
+        System.out.println("Weight: " + clonMurca.getWeight());
+        System.out.println("Name: " + clonMurca.getName());
+        System.out.println("Color: " + clonMurca.getColor());
+        System.out.println("============================================");
+        System.out.println("Weight: " + clonMurca.getWeight());
+        System.out.println("Name: " + clonMurca.getName());
+        System.out.println("Color: " + clonMurca.getColor());
     }
     private static Cat getKitten() {
         return new Cat(1100.0);
     }
+
 }
