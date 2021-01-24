@@ -24,7 +24,7 @@ public class Main {
     int sum = 0;
     String numberString = Integer.toString(number);
     for (int i = 0; i < numberString.length(); i++) {
-      sum += Integer.parseInt(String.valueOf(numberString.charAt(i)));
+      sum += Integer.parseInt(Character.toString(numberString.charAt(i)));
     }
     return sum;
   }
