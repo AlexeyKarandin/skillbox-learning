@@ -20,7 +20,12 @@ public class Main {
    */
 
   public static int sumDigits(Integer number) {
-    //@TODO: write code here and delete TODO line
-    return 0;
+
+    int sum = 0;
+    String numberString = Integer.toString(number);
+    for (int i = 0; i < numberString.length(); i++) {
+      sum += Integer.parseInt(String.valueOf(numberString.charAt(i)));
+    }
+    return sum;
   }
 }

@@ -1,6 +1,4 @@
-/**
- * Не совсем верно отрабатывает getCount т.к. циклы завязаны на вызове getStatus
- */
+
 public class Loader {
     public static void main(String[] args) {
         Cat murca = new Cat();
