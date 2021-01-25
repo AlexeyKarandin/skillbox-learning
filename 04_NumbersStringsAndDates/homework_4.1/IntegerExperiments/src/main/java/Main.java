@@ -7,6 +7,21 @@ public class Main {
     int sum = sumDigits(7843);
 
     System.out.println(sum);
+
+    // TODO homework_4.2
+    System.out.println(Byte.MAX_VALUE);
+    System.out.println(Byte.MIN_VALUE);
+    System.out.println(Integer.MAX_VALUE);
+    System.out.println(Integer.MIN_VALUE);
+    System.out.println(Short.MAX_VALUE);
+    System.out.println(Short.MIN_VALUE);
+    System.out.println(Long.MAX_VALUE);
+    System.out.println(Long.MIN_VALUE);
+    System.out.println(Float.MAX_VALUE);
+    System.out.println(Float.MIN_VALUE);
+    System.out.println(Double.MAX_VALUE);
+    System.out.println(Double.MIN_VALUE);
+
   }
 
   /* Реализуйте метод sumDigits который возвращает сумму цифр числа, пример:
