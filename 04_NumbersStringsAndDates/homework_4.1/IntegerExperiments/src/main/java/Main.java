@@ -21,6 +21,8 @@ public class Main {
     System.out.println(-Float.MIN_VALUE);
     System.out.println(Double.MAX_VALUE);
     System.out.println(-Double.MIN_VALUE);
+    System.out.printf("%.32f\n", -Double.MIN_VALUE);
+    System.out.printf("%.8f\n", -Double.MAX_VALUE);
 
   }
 
