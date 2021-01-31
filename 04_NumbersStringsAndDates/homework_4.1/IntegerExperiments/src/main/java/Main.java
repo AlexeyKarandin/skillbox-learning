@@ -18,12 +18,13 @@ public class Main {
     System.out.println(Long.MAX_VALUE);
     System.out.println(Long.MIN_VALUE);
     System.out.println(Float.MAX_VALUE);
-    System.out.println(-Float.MIN_VALUE);
-    System.out.println(Double.MAX_VALUE);
+    System.out.println(-Float.MAX_VALUE);
+    System.out.println(Double.NEGATIVE_INFINITY);
+    System.out.println(-Double.MAX_VALUE);
     System.out.println(-Double.MIN_VALUE);
-    System.out.printf("%.32f\n", -Double.MIN_VALUE);
-    System.out.printf("%.8f\n", -Double.MAX_VALUE);
-
+    System.out.println(Double.MIN_VALUE);
+    System.out.println(Double.MAX_VALUE);
+    System.out.println(Double.POSITIVE_INFINITY);
   }
 
   /* Реализуйте метод sumDigits который возвращает сумму цифр числа, пример:
