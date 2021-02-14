@@ -29,7 +29,8 @@ public class Main {
                     }
                 }
             }
-            if (!isValid && spaceCount != 2) {
+            // Изменил условие для проверки валидности введенной строки
+            if (!isValid || spaceCount != 2) {
                 System.out.println("Введенная строка не является ФИО");
                 break;
             }
