@@ -26,9 +26,9 @@ public class Main {
         DateFormat dateFormat = new SimpleDateFormat(" - dd.MM.yyyy - E", new Locale("us", "RU"));
         Calendar calendar = new GregorianCalendar(year, --month, day);
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; calendar.getTimeInMillis() <= System.currentTimeMillis();
+        for (int i = 0; Calendar.getInstance().after(calendar);
              calendar.add(Calendar.YEAR, 1), ++i) {
-            builder.append(i + dateFormat.format(calendar.getTime()) + "\r\n");
+            builder.append(i).append(dateFormat.format(calendar.getTime())).append("\r\n");
         }
         return builder.toString();
     }
