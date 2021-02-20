@@ -8,7 +8,17 @@ public class TwoDimensionalArray {
         // [X,  , X]
         // [ , X,  ]
         // [X,  , X]
-
-        return new char[0][0];
+        char[][] theXX = new char[size][size];
+        size--;
+        for (int i = 0; i < theXX.length; i++, size--) {
+            for (int j = 0; j < theXX.length; j++) {
+                if (i == j || j == size) {
+                    theXX[i][j] = symbol;
+                } else {
+                    theXX[i][j] = ' ';
+                }
+            }
+        }
+        return theXX;
     }
 }
