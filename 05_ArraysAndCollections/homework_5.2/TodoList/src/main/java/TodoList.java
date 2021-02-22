@@ -15,6 +15,8 @@ public class TodoList {
         if (index < list.size()) {
             list.add(index, todo);
             System.out.printf("Добавлено дело \"%s\"%n", todo);
+        } else {
+            list.add(todo);
         }
     }
 
