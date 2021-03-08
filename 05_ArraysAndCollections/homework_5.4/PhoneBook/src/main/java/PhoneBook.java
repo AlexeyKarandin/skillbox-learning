@@ -5,16 +5,23 @@ import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 public class PhoneBook {
-    private final Map<String, String> phoneBook = new TreeMap<>();
-    private final Set<String> phones = new TreeSet<>();
+    private final Map<String, Set<String>> phoneBook = new TreeMap<>();
+    private Set<String> phones;
 
     public void addContact(String phone, String name) {
         // проверьте корректность формата имени и телефона
         // если такой номер уже есть в списке, то перезаписать имя абонента
+        phones = new TreeSet<>();
         if (checkPhone(phone) && checkName(name)) {
-            if (phoneBook.containsKey(phone)) {
-                phoneBook.replace(phone, name);
-            } else phoneBook.put(phone, name);
+            if (phoneBook.containsKey(name)) {
+                phones.addAll(phoneBook.get(name));
+                phones.add(phone);
+                phoneBook.put(name, phones);
+            } else {
+                searchPhoneAndDelete(phone);
+                phones.add(phone);
+                phoneBook.put(name, new TreeSet<>(phones));
+            }
             System.out.println("Контакт сохранен!\n");
         }
 
@@ -23,8 +30,10 @@ public class PhoneBook {
     public String getNameByPhone(String phone) {
         // формат одного контакта "Имя - Телефон"
         // если контакт не найдены - вернуть пустую строку
-        if (phoneBook.containsKey(phone)) {
-            return phoneBook.get(phone) + " - " + phone;
+        for (Map.Entry<String, Set<String>> entry: phoneBook.entrySet()) {
+            if (entry.getValue().contains(phone)) {
+                return entry.getKey() + " - " + phone;
+            }
         }
         return "";
     }
@@ -32,13 +41,11 @@ public class PhoneBook {
     public Set<String> getPhonesByName(String name) {
         // формат одного контакта "Имя - Телефон"
         // если контакт не найден - вернуть пустой TreeSet
-        phones.clear();
-        String phone = "";
-        if (phoneBook.containsValue(name)) {
-            for (Map.Entry<String, String> entry : phoneBook.entrySet()) {
-                if (entry.getValue().equals(name)) phone = entry.getKey();
+        phones = new TreeSet<>();
+        if (phoneBook.containsKey(name)) {
+            for (Map.Entry<String, Set<String>> entry : phoneBook.entrySet()) {
+                if (entry.getKey().equals(name)) entry.getValue().forEach(o -> phones.add(name + " - " + o));
             }
-            phones.add(name + " - " + phone);
         }
 
         return phones;
@@ -47,13 +54,13 @@ public class PhoneBook {
     public Set<String> getAllContacts() {
         // формат одного контакта "Имя - Телефон"
         // если контактов нет в телефонной книге - вернуть пустой TreeSet
-        phones.clear();
+        phones = new TreeSet<>();
         if (phoneBook.isEmpty()) {
             return new TreeSet<>();
         } else {
-            for (String k :
-                    phoneBook.keySet()) {
-                phones.add(phoneBook.get(k) + " - " + k);
+            for (Map.Entry<String, Set<String>> entry : phoneBook.entrySet()) {
+                if (!entry.getValue().isEmpty() && entry.getValue().iterator().hasNext())
+                    phones.add(String.format("%s - %s", entry.getKey(), entry.getValue().toString().replaceAll("[\\[\\]]", "")));
             }
             return phones;
         }
@@ -68,5 +75,14 @@ public class PhoneBook {
     private boolean checkPhone(String input) {
         Pattern inputPhone = Pattern.compile("7\\d{10}");
         return inputPhone.matcher(input).matches();
+    }
+
+    private void searchPhoneAndDelete(String search) {
+        phones.clear();
+        for (Map.Entry<String, Set<String>> entry: phoneBook.entrySet()) {
+            if (entry.getValue().contains(search)) {
+                entry.getValue().removeIf(s -> s.equals(search));
+            }
+        }
     }
 }
