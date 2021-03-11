@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 public class CoolNumbers {
 
@@ -14,55 +13,24 @@ public class CoolNumbers {
     }
 
     public static boolean bruteForceSearchInList(List<String> list, String number) {
-        long startSearch = System.currentTimeMillis();
         for (String s : list) {
-            if (s.equals(number)) {
-                // не переводил в наносекунды, т.к. получаются большие цифры, для перевода можно воспользоваться строкой ниже
-                time = TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis() - startSearch);
-                //time = System.currentTimeMillis() - startSearch;
-                return true;
-            }
+            if (s.equals(number)) return true;
         }
-        time = TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis() - startSearch);
         return false;
     }
 
     public static boolean binarySearchInList(List<String> sortedList, String number) {
-        long startSearch = System.currentTimeMillis();
-        Collections.sort(sortedList);
-        if (Collections.binarySearch(sortedList, number) >= 0) {
-            time = TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis() - startSearch);
-            //time = System.currentTimeMillis() - startSearch;
-            return true;
-        } else {
-            time = TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis() - startSearch);
-            return false;
-        }
-
+        return Collections.binarySearch(sortedList, number) >= 0;
     }
 
 
     public static boolean searchInHashSet(HashSet<String> hashSet, String number) {
-        long startSearch = System.currentTimeMillis();
-        if (hashSet.contains(number)) {
-            time = TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis() - startSearch);
-            //time = System.currentTimeMillis() - startSearch;
-            return true;
-        } else {
-            time = TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis() - startSearch);
-            return false;
-        }
+        return hashSet.contains(number);
     }
 
+
     public static boolean searchInTreeSet(TreeSet<String> treeSet, String number) {
-        long startSearch = System.currentTimeMillis();
-        if (treeSet.contains(number)) {
-            time = TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis() - startSearch);
-            return true;
-        } else {
-            time = TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis() - startSearch);
-            return false;
-        }
+        return treeSet.contains(number);
     }
 
     public static String getRand(int min, int max) {
@@ -85,7 +53,5 @@ public class CoolNumbers {
         builder.append(getRand(minR, maxR));
         return builder.toString();
     }
-
-    public static long time = 0;
 }
 
