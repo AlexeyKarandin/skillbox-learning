@@ -15,7 +15,7 @@ public class BankAccount {
 
     }
 
-    boolean send(BankAccount receiver, double amount) {
+    public boolean send(BankAccount receiver, double amount) {
         double thisAmount = this.getAmount();
         this.take(amount);
         if (thisAmount - amount == this.getAmount()) {

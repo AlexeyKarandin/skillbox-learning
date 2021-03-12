@@ -2,7 +2,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class DepositAccount extends BankAccount {
-    Calendar lastIncome = new GregorianCalendar();
+    private Calendar lastIncome = new GregorianCalendar();
 
     @Override
     public void put(double amountToPut) {
