@@ -30,8 +30,8 @@ public class Company {
     }
 
     // Увольнение сотрудника
-    public void fire(Employee e) {
-        employees.remove(e);
+    public void fire() {
+        employees.remove(0);
     }
 
     public double getIncome() {
@@ -45,7 +45,7 @@ public class Company {
                 if (o1.getMonthSalary() < o2.getMonthSalary()) return 1;
                 return 0;
             });
-            return new LinkedList<Employee>().subList(0, count);
+            return new LinkedList<Employee>(employees.subList(0, count));
         }
         return new LinkedList<>();
     }
