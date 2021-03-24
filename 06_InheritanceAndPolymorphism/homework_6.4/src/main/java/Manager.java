@@ -12,6 +12,7 @@ public class Manager implements Employee {
     public double getMonthSalary() {
         return salary;
     }
+
     public String getName() {
         return name;
     }
