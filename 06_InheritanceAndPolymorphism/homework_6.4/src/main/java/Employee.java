@@ -1,5 +1,5 @@
 public interface Employee {
 
-    public double getMonthSalary();
+    double getMonthSalary();
 
 }

@@ -1,24 +1,17 @@
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Comparator;
 import java.util.List;
 
 
 public class Company {
     private final double MAX_INCOME = 140000.0;
     private final double MIN_INCOME = 115000.0;
-    private double income = Math.random() * (MAX_INCOME - MIN_INCOME) + MIN_INCOME;
-    private List<Employee> employees = new ArrayList<>();
-    private String nameCompany;
+    private final double income = Math.random() * (MAX_INCOME - MIN_INCOME) + MIN_INCOME;
+    private final List<Employee> employees = new ArrayList<>();
 
-    public String getNameCompany() {
-        return nameCompany;
+    public Company getCompany() {
+        return this;
     }
-
-    public Company(String name, double income) {
-        nameCompany = name;
-        this.income = income;
-    }
-
     // Найм сотрудника
     public void hire(Employee e) {
         employees.add(e);
@@ -38,27 +31,33 @@ public class Company {
         return income;
     }
 
+    /**
+     * Метод List<Employee> getTopSalaryStaff(int count).
+     * Создание коллекции [count] самых высоких зарплат компании.
+     *
+     * @param count количество самых высоких зарплат.
+     * @return коллекция [count] самых высоких зарплат.
+     */
     public List<Employee> getTopSalaryStaff(int count) {
-        if (!employees.isEmpty()) {
-            employees.sort((o1, o2) -> {
-                if (o1.getMonthSalary() > o2.getMonthSalary()) return -1;
-                if (o1.getMonthSalary() < o2.getMonthSalary()) return 1;
-                return 0;
-            });
-            return new LinkedList<Employee>(employees.subList(0, count));
-        }
-        return new LinkedList<>();
+        employees.sort(Comparator.comparingDouble(Employee::getMonthSalary).reversed());
+        List<Employee> result = new ArrayList<>();
+        for (int i = 0; i < count; i++)
+            result.add(employees.get(i));
+        return result;
     }
 
+    /**
+     * Метод List<Employee> getTopSalaryStaff(int count).
+     * Создание коллекции [count] самых низких зарплат компании.
+     *
+     * @param count количество самых низких зарплат.
+     * @return коллекция [count] самых низких зарплат.
+     */
     public List<Employee> getLowestSalaryStaff(int count) {
-        if (!employees.isEmpty()) {
-            employees.sort((o1, o2) -> {
-                if (o1.getMonthSalary() > o2.getMonthSalary()) return 1;
-                if (o1.getMonthSalary() < o2.getMonthSalary()) return -1;
-                return 0;
-            });
-            return new LinkedList<Employee>(employees.subList(0, count));
-        }
-        return new LinkedList<>();
+        employees.sort(Comparator.comparingDouble(Employee::getMonthSalary));
+        List<Employee> result = new ArrayList<>();
+        for (int i = 0; i < count; i++)
+            result.add(employees.get(i));
+        return result;
     }
 }
