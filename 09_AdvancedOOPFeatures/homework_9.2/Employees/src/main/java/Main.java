@@ -1,4 +1,7 @@
+import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 public class Main {
 
@@ -11,8 +14,14 @@ public class Main {
     }
 
     public static Employee findEmployeeWithHighestSalary(List<Employee> staff, int year) {
-        //TODO Метод должен вернуть сотрудника с максимальной зарплатой среди тех,
-        // кто пришёл в году, указанном в переменной year
-        return null;
+
+        Calendar calendar = Calendar.getInstance();
+        Optional<Employee> employee = staff.stream()
+                .filter(x -> {
+                    calendar.setTime(x.getWorkStart());
+                    return calendar.get(Calendar.YEAR) == year;
+                })
+                .max(Comparator.comparing(Employee::getSalary));
+        return employee.orElse(null);
     }
 }
