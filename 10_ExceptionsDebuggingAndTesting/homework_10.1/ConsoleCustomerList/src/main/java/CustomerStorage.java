@@ -15,6 +15,13 @@ public class CustomerStorage {
         final int INDEX_PHONE = 3;
 
         String[] components = data.split("\\s+");
+        if (components.length != 4) {
+            throw new IllegalArgumentException("Wrong format!\n Correct format: " +
+                    "add Василий Петров vasily.petrov@gmail.com +79215637722");
+        } else if (!components[2].matches("\\w+\\.?\\w+@\\w+\\.[A-z]{2,3}")) {
+            throw new IllegalArgumentException("Не верно указан почтовый адрес. Пример vasily.petrov@gmail.com");
+        } else if (!components[3].matches("\\+7\\d{10}"))
+            throw new IllegalArgumentException("Не верно указан номер телефона. Пример +79215637722");
         String name = components[INDEX_NAME] + " " + components[INDEX_SURNAME];
         storage.put(name, new Customer(name, components[INDEX_PHONE], components[INDEX_EMAIL]));
     }
@@ -24,11 +31,16 @@ public class CustomerStorage {
     }
 
     public void removeCustomer(String name) {
-        storage.remove(name);
+        if (storage.remove(name) == null)
+            throw new IllegalArgumentException("Customer not found or need more arguments");
     }
 
     public Customer getCustomer(String name) {
-        return storage.get(name);
+        if (storage.get(name) != null)
+            return storage.get(name);
+        else
+            throw new IllegalArgumentException("Customer not found or need more arguments");
+
     }
 
     public int getCount() {
