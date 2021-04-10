@@ -42,12 +42,14 @@ public class Main {
                         System.out.println(COMMAND_ERROR);
                         break;
                 }
+            } catch (InvalidEmailException ex) {
+                System.out.println(ex.getMessage() + " Используйте: \n" + COMMAND_EXAMPLES);
+            } catch (InvalidPhoneException ex) {
+                System.out.println(ex.getMessage() + " Используйте: \n" + COMMAND_EXAMPLES);
             } catch (IllegalArgumentException ex) {
                 System.out.println(ex.getMessage() + "\nUse:\n" + COMMAND_EXAMPLES);
             } catch (ArrayIndexOutOfBoundsException ex) {
                 System.out.println("Внимание! " + ex.getMessage() + "\nПример для ввода:\n" + COMMAND_EXAMPLES);
-            } catch (IllegalValueException ex) {
-                System.out.println(ex.getMessage() + "Введено: " + ex.getNumber());
             }
         }
     }
