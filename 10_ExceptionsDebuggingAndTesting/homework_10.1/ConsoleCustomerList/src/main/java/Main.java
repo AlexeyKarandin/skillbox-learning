@@ -46,6 +46,8 @@ public class Main {
                 System.out.println(ex.getMessage() + "\nUse:\n" + COMMAND_EXAMPLES);
             } catch (ArrayIndexOutOfBoundsException ex) {
                 System.out.println("Внимание! " + ex.getMessage() + "\nПример для ввода:\n" + COMMAND_EXAMPLES);
+            } catch (IllegalValueException ex) {
+                System.out.println(ex.getMessage() + "Введено: " + ex.getNumber());
             }
         }
     }
