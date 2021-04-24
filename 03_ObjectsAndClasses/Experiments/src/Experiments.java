@@ -1,5 +1,5 @@
-import com.skillbox.airport.Aircraft;
-import com.skillbox.airport.Airport;
+//import com.skillbox.airport.Aircraft;
+//import com.skillbox.airport.Airport;
 
 public class Experiments {
     public static void main(String[] args) {
