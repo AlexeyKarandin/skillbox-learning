@@ -22,8 +22,6 @@ public class RouteCalculatorTest extends TestCase {
         stations = new ArrayList<>();
         stationIndex = new StationIndex();
 
-        RouteCalculator calculator = new RouteCalculator(new StationIndex());
-
         Line line1 = new Line(1, "Кировско-Выборгская");
         Line line2 = new Line(2, "Московско-Петроградская");
         Line line3 = new Line(3, "Невско-Василеостровская");
@@ -64,8 +62,8 @@ public class RouteCalculatorTest extends TestCase {
     @Test
     public void testGetShortestRoute() {
 
-      actual = routeCalculator.getShortestRoute(stationIndex.getStation("Владимирская"),
-              stationIndex.getStation("Гостиный двор"));
+      actual = routeCalculator.getShortestRoute(stationIndex.getStation("Лесная"),
+              stationIndex.getStation("Яблочная"));
       assertEquals("123", actual.toString());
 
     }
