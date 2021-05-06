@@ -1,5 +1,9 @@
 import core.Line;
 import core.Station;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -11,12 +15,20 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+    private static Logger logger;
+    private static Marker searchStation;
+    private static Marker nullSearch;
+    private static Marker isExc;
     private static final String DATA_FILE = "src/main/resources/map.json";
     private static Scanner scanner;
 
     private static StationIndex stationIndex;
 
     public static void main(String[] args) {
+        logger = LogManager.getLogger("SearchFile");
+        searchStation = MarkerManager.getMarker("SearchFile");
+        nullSearch = MarkerManager.getMarker("InputErrors");
+        isExc = MarkerManager.getMarker("Exception");
         RouteCalculator calculator = getRouteCalculator();
 
         System.out.println("Программа расчёта маршрутов метрополитена Санкт-Петербурга\n");
@@ -56,14 +68,24 @@ public class Main {
     }
 
     private static Station takeStation(String message) {
+
         for (; ; ) {
             System.out.println(message);
             String line = scanner.nextLine().trim();
             Station station = stationIndex.getStation(line);
-            if (station != null) {
-                return station;
+            try {
+                if (station != null) {
+                    logger.info(searchStation, "Станция найдена: " + line);
+                    return station;
+                } else if (line.isEmpty()) {
+                    throw new Exception("Не вводите пустую строку!!!");
+                }
+                logger.info(nullSearch, "Станция не найдена: " + line);
+                System.out.println("Станция не найдена :(");
+            } catch (Exception e) {
+                logger.info(isExc, e.getMessage());
+                System.out.println(e.getMessage());
             }
-            System.out.println("Станция не найдена :(");
         }
     }
 
@@ -138,7 +160,7 @@ public class Main {
         StringBuilder builder = new StringBuilder();
         try {
             List<String> lines = Files.readAllLines(Paths.get(DATA_FILE));
-            lines.forEach(line -> builder.append(line));
+            lines.forEach(builder::append);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
