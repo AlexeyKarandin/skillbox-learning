@@ -1,26 +1,34 @@
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class FileUtils {
     private static final Logger logger = LogManager.getLogger();
 
     public static long calculateFolderSize(String path) {
         long sumSize;
-        File file = new File(path);
+        Path pat = Paths.get(path);
         try {
-            if (!file.exists()) {
+            if (!Files.exists(pat)) {
                 logger.error("Не найден путь: " + path);
                 throw new IOException();
             }
-            sumSize = Arrays.stream(file.listFiles()).mapToLong(file1 -> {
-                logger.info("В обработке: " + file1.getAbsolutePath());
-                return file1.isDirectory() ? calculateFolderSize(file1.getAbsolutePath())
-                        : file1.length();
-            }).sum();
+            sumSize = Files.walk(pat)
+                    .filter(Files::isRegularFile)
+                    .filter(Files::exists)
+                    .mapToLong(file1 -> {
+                        try {
+                            return Files.size(file1);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        return 0;
+                    })
+                    .sum();
             logger.info("Сумма составляет: " + sumSize + " byte");
             return sumSize;
         } catch (IOException e) {
