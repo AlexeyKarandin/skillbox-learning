@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="INFO">
+    <appenders>
+        <File name="SearchDirectory" fileName="logs/SearchDirectory.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] - %msg%n"/>
+<!--            <MarkerFilter marker="SearchFile" onMatch="ACCEPT" onMismatch="DENY"/>-->
+        </File>
+    </appenders>
+
+    <Loggers>
+        <root level="info">
+            <appender-ref ref="SearchDirectory" level="info"/>
+        </root>
+    </Loggers>
+
+</configuration>
