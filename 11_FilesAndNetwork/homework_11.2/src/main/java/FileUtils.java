@@ -12,7 +12,7 @@ public class FileUtils {
     private final static Logger logger = LogManager.getLogger();
 
     public static void copyFolder(String sourceDirectory, String destinationDirectory) {
-        // TODO: write code copy content of sourceDirectory to destinationDirectory
+
         Path pathIn = Paths.get(sourceDirectory);
         Path pathOut = Paths.get(destinationDirectory);
         try (Stream<Path> stream = Files.walk(pathIn)) {
@@ -22,7 +22,9 @@ public class FileUtils {
             }
             stream.forEach(path -> {
                 try {
-                    Files.copy(path, pathOut.resolve(pathIn.relativize(path)), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
+                    logger.info(String.format("Копируемый файл: %s. Путь файла: %s", path.getFileName(), path));
+                    Files.copy(path, pathOut.resolve(pathIn.relativize(path)), StandardCopyOption.REPLACE_EXISTING);
+                    logger.info(String.format("Файл %s скопирован в: %s", path.getFileName().toString(), pathOut.resolve(pathIn.relativize(path).toString())));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
