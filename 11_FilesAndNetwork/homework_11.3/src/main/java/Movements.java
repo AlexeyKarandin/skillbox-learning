@@ -22,21 +22,19 @@ public class Movements {
     private double income;
     private double expense;
     private final List<Movements> movements = new ArrayList<>();
-    private Map<String, Double> organization = new HashMap<>();
-    Pattern pattern = Pattern.compile("((\\d{6}.+\\d{4}) {4,6}(\\S+ ?\\w+) {5,}.* MCC(\\d{4}))");
+    private final Map<String, Double> organizationSum = new HashMap<>();
+    private final Map<String, String> organization = new HashMap<>();
+    Pattern pattern = Pattern.compile(" {4,6}(.+>?\\w) {10,22}.+(MCC\\d+)");
     Matcher m;
 
     public Movements(String pathMovementsCsv) {
         try {
             Reader reader = Files.newBufferedReader(Paths.get(pathMovementsCsv));
             CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT);
-            csvParser.getRecords().stream().skip(1).forEach(str -> {
-                movements.add(new Movements(str.get(0), str.get(1), str.get(2), str.get(3),
-                        str.get(4), str.get(5),
-                        Double.parseDouble(str.get(6).replaceAll(",", ".")),
-                        Double.parseDouble(str.get(7).replaceAll(",", "."))));
-
-            });
+            csvParser.getRecords().stream().skip(1).forEach(str -> movements.add(new Movements(str.get(0), str.get(1), str.get(2), str.get(3),
+                    str.get(4), str.get(5),
+                    Double.parseDouble(str.get(6).replaceAll(",", ".")),
+                    Double.parseDouble(str.get(7).replaceAll(",", ".")))));
         } catch (IOException | IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
@@ -66,15 +64,18 @@ public class Movements {
 
         movements.stream().filter(m -> m.getExpense() != 0).forEach(movements1 -> {
             m = pattern.matcher(movements1.getDescription());
-            System.out.println(pattern.matcher(movements1.getDescription()).group());
-            if (organization.containsKey(m.group(1))) {
-                organization.put(m.group(1), organization.get(m.group(1)) + movements1.getExpense());
+            m.find();
+            organization.put(m.group(2), m.group(1));
+            if (organizationSum.containsKey(m.group(2))) {
+                organizationSum.put(m.group(2), organizationSum.get(m.group(2)) + movements1.getExpense());
             } else {
-                organization.put(m.group(1), movements1.getExpense());
+                organizationSum.put(m.group(2), movements1.getExpense());
             }
         });
         System.out.println("Суммы расходов по организациям:");
-        organization.entrySet().forEach(System.out::println);
+        organizationSum.entrySet().forEach(map -> {
+            System.out.printf("%s\t\t%.2f руб.%s", organization.get(map.getKey()), map.getValue(), System.lineSeparator());
+        });
     }
 
     public String getAccType() {
