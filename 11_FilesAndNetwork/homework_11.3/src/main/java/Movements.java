@@ -13,11 +13,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Movements {
-    private String accType;
-    private String accNumber;
-    private String curr;
-    private String date;
-    private String reference;
     private String description;
     private double income;
     private double expense;
@@ -31,8 +26,7 @@ public class Movements {
         try {
             Reader reader = Files.newBufferedReader(Paths.get(pathMovementsCsv));
             CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT);
-            csvParser.getRecords().stream().skip(1).forEach(str -> movements.add(new Movements(str.get(0), str.get(1), str.get(2), str.get(3),
-                    str.get(4), str.get(5),
+            csvParser.getRecords().stream().skip(1).forEach(str -> movements.add(new Movements(str.get(5),
                     Double.parseDouble(str.get(6).replaceAll(",", ".")),
                     Double.parseDouble(str.get(7).replaceAll(",", ".")))));
         } catch (IOException | IndexOutOfBoundsException e) {
@@ -40,12 +34,7 @@ public class Movements {
         }
     }
 
-    private Movements(String accType, String accNumber, String curr, String date, String reference, String description, double income, double expense) {
-        this.accType = accType;
-        this.accNumber = accNumber;
-        this.curr = curr;
-        this.date = date;
-        this.reference = reference;
+    private Movements(String description, double income, double expense) {
         this.description = description;
         this.income = income;
         this.expense = expense;
@@ -73,29 +62,8 @@ public class Movements {
             }
         });
         System.out.println("Суммы расходов по организациям:");
-        organizationSum.entrySet().forEach(map -> {
-            System.out.printf("%s\t\t%.2f руб.%s", organization.get(map.getKey()), map.getValue(), System.lineSeparator());
-        });
-    }
-
-    public String getAccType() {
-        return accType;
-    }
-
-    public String getAccNumber() {
-        return accNumber;
-    }
-
-    public String getCurr() {
-        return curr;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getReference() {
-        return reference;
+        organizationSum.forEach((key, value) -> System.out.printf("%s\t\t%.2f руб.%s", organization.get(key),
+                value, System.lineSeparator()));
     }
 
     public String getDescription() {
@@ -110,18 +78,4 @@ public class Movements {
         return expense;
     }
 
-    @Override
-    public String toString() {
-        return "Movements{" +
-                "accType='" + accType + '\'' +
-                ", accNumber='" + accNumber + '\'' +
-                ", curr='" + curr + '\'' +
-                ", date='" + date + '\'' +
-                ", reference='" + reference + '\'' +
-                ", description='" + description + '\'' +
-                ", income=" + income +
-                ", expense=" + expense +
-                ", movements=" + movements +
-                '}';
-    }
 }
