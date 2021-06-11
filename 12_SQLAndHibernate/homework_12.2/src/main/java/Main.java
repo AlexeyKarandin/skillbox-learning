@@ -17,6 +17,9 @@ public class Main {
         Course course = session.get(Course.class, 3);
         System.out.println(course.getName() + ". На данном курсе студентов:  " + course.getStudentsCount());
 
+        Teacher teacher = session.get(Teacher.class, 1);
+        System.out.println(teacher.getName() + " возраст: " + teacher.getAge());
+
         sessionFactory.close();
     }
 }
