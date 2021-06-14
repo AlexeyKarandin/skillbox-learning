@@ -15,6 +15,4 @@ public class Teacher {
     private int salary;
 
     private int age;
-
-
 }

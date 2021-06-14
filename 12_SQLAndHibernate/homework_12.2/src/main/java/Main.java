@@ -1,5 +1,6 @@
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -19,6 +20,14 @@ public class Main {
 
         Teacher teacher = session.get(Teacher.class, 1);
         System.out.println(teacher.getName() + " возраст: " + teacher.getAge());
+
+        Transaction transaction = session.beginTransaction();
+
+        course = session.get(Course.class, 1);
+        course.getStudents().forEach(student -> System.out.println(
+                student.getId() + " " + student.getName() + " " + student.getRegistrationDate()
+        ));
+        transaction.commit();
 
         sessionFactory.close();
     }
